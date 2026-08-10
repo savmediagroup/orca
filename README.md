@@ -69,7 +69,7 @@ The folder is the plugin *and* its own marketplace, so there is no build step â€
 git push. Buyers run:
 
 ```
-/plugin marketplace add savmediagroup/orca
+/plugin marketplace add https://github.com/savmediagroup/orca.git
 /plugin install orca@savmedia
 /setup
 ```

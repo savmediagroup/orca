@@ -10,11 +10,18 @@ send us that step number — we'd rather fix it than have you push through it.
 
 ## Before you start
 
-**You need a Claude Pro or Max subscription.** The team runs on your own Claude account, which
-is why there's no usage bill from us — and why it can't run on a free plan.
+Two things:
 
-That's the only requirement. There is no server to set up, no API key to buy, and nothing of
-yours gets stored anywhere but your own computer.
+1. **A Claude Pro or Max subscription.** The team runs on your own Claude account, which is why
+   there's no usage bill from us — and why it can't run on a free plan.
+2. **A free GitHub account**, and we add you to Orca. Orca is private, so access is granted to you
+   personally. Send us your GitHub username and accept the email invite that follows.
+
+There is no server to set up, no API key to buy, and nothing of yours gets stored anywhere but your
+own computer.
+
+**Step 3 below is the only fiddly part of this whole process.** If you'd rather not do it alone,
+book the setup call and we'll do it with you in five minutes. That's what it's there for.
 
 ---
 
@@ -38,12 +45,41 @@ not the desktop.
 
 ---
 
-## 3. Add the team
+## 3. Connect your computer to GitHub
 
-Type these two lines into Claude Code, one after the other:
+Because Orca is private, your computer has to prove it's you. **This is a one-time thing** and
+you'll never think about it again.
+
+Open the Terminal app and run these three lines, one at a time:
 
 ```
-/plugin marketplace add savmediagroup/orca
+brew install gh
+```
+
+```
+gh auth login
+```
+
+```
+gh auth setup-git
+```
+
+`gh auth login` asks a few questions — choose **GitHub.com**, then **HTTPS**, then **Login with a
+web browser**. It opens your browser, you paste a code, done.
+
+On Windows, download GitHub CLI from **cli.github.com** instead of the `brew` line, then run the
+other two the same way.
+
+**Stuck here? Stop and book the setup call.** This is the one step worth doing with someone.
+
+---
+
+## 4. Add the team
+
+Back in Claude Code, type these two lines, one after the other:
+
+```
+/plugin marketplace add https://github.com/savmediagroup/orca.git
 ```
 
 ```
@@ -55,7 +91,7 @@ instant.
 
 ---
 
-## 4. Restart, and let it start itself
+## 5. Restart, and let it start itself
 
 Restart Claude Code and open your folder. **Orca starts setup on its own** — you don't have to
 know any commands. If for any reason it doesn't, type:
@@ -127,6 +163,11 @@ The agents improve as they're field-tested. Updating is how you get that.
 ---
 
 ## Troubleshooting
+
+**"It says repository not found, or asks for a username and password."**
+Your computer isn't signed in to GitHub yet, or the invite hasn't been accepted. Check your email
+for the invite, then redo step 3. To test it, run `gh auth status` in Terminal — it should name your
+account.
 
 **"The commands aren't there after installing."**
 Restart Claude Code. Plugin skills load at session start.
