@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "orca",
+  "displayName": "Orca",
+  "version": "0.9.3",
+  "description": "One Real Constraint, Always. An Advisor and nine specialist agents that diagnose a business, find the one thing actually holding it back, and route the fix to the right specialist. Profile-first: every agent reads your business profile before it says anything, and every agent carries a named honesty check that stops it giving you a confident answer the evidence doesn't support.",
+  "author": {
+    "name": "Sav Media Group",
+    "url": "https://savmediagroup.com.au"
+  },
+  "homepage": "https://savmediagroup.com.au",
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": [
+    "marketing",
+    "growth",
+    "diagnosis",
+    "paid-ads",
+    "seo",
+    "geo",
+    "copywriting",
+    "outbound",
+    "crm",
+    "content",
+    "operations",
+    "unit-economics"
+  ],
+  "metadata": {
+    "productStatus": "pre-launch",
+    "roster": 10
+  }
+}
