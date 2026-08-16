@@ -4,6 +4,12 @@ Copyright (c) 2026 Sav Media Group. All rights reserved.
 
 This software and its accompanying documentation ("the Product") are licensed, not sold.
 
+THIRD-PARTY COMPONENTS
+Parts of the Product's `engines/` folder derive from open-source work and remain governed by
+their own licences, which are reproduced in NOTICE.md. Where NOTICE.md applies to a file, its
+terms govern that file and this licence does not restrict it. Everything else in the Product —
+the ten agents, the team doctrine, and the method they encode — is covered by the terms below.
+
 GRANT
 Each purchaser is granted a non-exclusive, non-transferable licence to install and use the
 Product for their own business, and for businesses they own or operate. The licence covers

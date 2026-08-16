@@ -4,7 +4,7 @@ description: >
   Analyze existing XML sitemaps or generate new ones with industry templates.
   Validates format, URLs, and structure. Use when user says "sitemap",
   "generate sitemap", "sitemap issues", or "XML sitemap".
-user-invokable: true
+user-invokable: false
 argument-hint: "[url or generate]"
 allowed-tools:
   - Read

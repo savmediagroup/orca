@@ -5,7 +5,7 @@ description: >
   "X vs Y" layouts, "alternatives to X" pages, feature matrices, schema markup,
   and conversion optimization. Use when user says "comparison page", "vs page",
   "alternatives page", "competitor comparison", or "X vs Y".
-user-invokable: true
+user-invokable: false
 argument-hint: "[url or generate] [competitor]"
 allowed-tools:
   - Read

@@ -1,6 +1,34 @@
 # Changelog
 
-Dates are the build dates. Versions before 1.0.0 are pre-launch — the product is not on sale.
+Dates are the build dates. **1.0.0 is reserved for the day someone who isn't technical installs
+this on their own machine and reaches a real finding without help.** Until then the version stays
+below it, however finished the product feels.
+
+## 0.9.5 — 16 Aug 2026 · beta cohort
+
+- **Released to a small founding cohort.** The product is on sale for the first time, to a handful
+  of businesses, at a founding price — the point of the cohort is the two things the build can't
+  produce for itself: an install done by someone who didn't build it, and real client data for the
+  two agents that have only ever run against our own.
+- **The first-run hook also fires on resume and compact**, not just a cold start. It was possible
+  to install, continue an existing session, and never be told setup exists.
+- **`NOTICE.md` — third-party licences honoured.** Sixteen of the forty engines derive from
+  open-source work under MIT. That licence permits everything we're doing with them and asks one
+  thing in return: carry the notice. It was missing. It ships now, and `LICENSE` carves those
+  files out of our own terms rather than claiming them.
+- **Every engine is marked non-invokable.** Seventeen still carried `user-invokable: true` from
+  their previous life as standalone skills. Inert where they sit — engines aren't registered as
+  skills — but it meant the ten-command promise depended on a folder location rather than the
+  files themselves. Now it doesn't.
+- Pre-release scan clean on all four checks. Plugin manifest validates strict. Hook verified against
+  a missing profile, a present profile, malformed input and empty input — fails open in every case.
+
+## 0.9.4 — 10 Aug 2026 · install for a private repo
+
+- **The install guide assumed a public repo.** It now covers the access step honestly: a GitHub
+  account, an invite, and a one-time `gh auth login` so the buyer's machine can read a private
+  marketplace. That step is called out as the only fiddly part, with the setup call as the escape
+  hatch rather than a wall of troubleshooting.
 
 ## 0.9.3 — 10 Aug 2026 · the engines
 

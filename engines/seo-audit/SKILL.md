@@ -5,7 +5,7 @@ description: >
   pages, detects business type, delegates to 7 specialists, generates health
   score. Use when user says "audit", "full SEO check", "analyze my site",
   or "website health check".
-user-invokable: true
+user-invokable: false
 argument-hint: "[url]"
 allowed-tools:
   - Read

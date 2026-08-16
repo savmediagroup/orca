@@ -6,7 +6,7 @@ description: >
   (copy + visual briefs), each isolating one testable variable. Triggers on:
   creative variation, ad variations, refresh winner, creative fatigue, variation matrix,
   remix ad, /creative-variation, /ad-variations.
-user-invokable: true
+user-invokable: false
 argument-hint: "[client folder path or paste seed creative + round goal]"
 ---
 

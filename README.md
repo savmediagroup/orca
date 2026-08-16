@@ -1,187 +1,156 @@
-# Product Source — The Agent Team
+# Orca
 
-> This folder is the PRODUCT — what buyers install. Everything in here must be
-> **client-agnostic**: no Sav Media context, no Sav clients, no Sav numbers baked in.
-> The plan for the product lives one level up in [00-PRODUCT-PLAN.md](../00-PRODUCT-PLAN.md).
+### One Real Constraint, Always.
 
-## The core architecture rule: PROFILE-FIRST
+**You do not have twenty problems. You have one — and you're spending money on the other nineteen.**
 
-The product must think in the **buyer's** line of work, not ours. The mechanism:
+Orca is a team of ten AI agents that installs into your own Claude account, learns your business
+once, and then tells you the single thing actually holding it back. Not a list. Not a dashboard.
+One constraint, named, with the three steps that fix it.
 
-1. **`business-profile.md`** — one file at the buyer's workspace root that describes THEIR
-   business: what they sell, to whom, their numbers, channels, team, compliance constraints.
-2. **The Advisor generates it** on first run via a conversational intake (8 questions max).
-   No profile → intake runs before any advice is given. This IS the "pre-install doc".
-3. **Every agent reads the profile first.** No agent gives advice, writes copy, or builds
-   anything without loading it. The profile is the lens; the frameworks are universal.
-4. **The profile is living** — agents append confirmed facts (real CPLs, close rates,
-   channel results) as they learn them, so the team gets smarter about the business over time.
+---
 
-## Layout
+## The problem this exists for
 
-```
-product/
-├── .claude-plugin/
-│   ├── plugin.json                    ← the plugin manifest (this folder IS the plugin)
-│   └── marketplace.json               ← and its own single-plugin marketplace
-├── README.md                          ← this file
-├── INSTALL.md                         ← what the buyer reads — two commands, then /setup
-├── CHANGELOG.md
-├── LICENSE
-├── setup/
-│   └── BUSINESS-PROFILE-TEMPLATE.md   ← the template the Advisor fills on first run
-├── skills/
-│   ├── _SHARED/TEAM-DOCTRINE.md       ← the rules ALL agents obey — every agent reads it first
-│   ├── setup/SKILL.md                 ← first-run wizard — install, tools, and the cold start test
-│   ├── advisor/SKILL.md               ← Agent 0 — The Advisor (front door, routes everything)
-│   ├── auditor/SKILL.md               ← Agent 1 — The Auditor (paid media audit + rebuild)
-│   ├── ranker/SKILL.md                ← Agent 2 — The Ranker (SEO + AI-search / GEO)
-│   ├── scripter/SKILL.md              ← Agent 3 — The Scripter (offers, hooks, copy, VSLs)
-│   ├── hunter/SKILL.md                ← Agent 4 — The Hunter (outbound)
-│   ├── builder/SKILL.md               ← Agent 5 — The Builder (CRM / funnels / automation)
-│   ├── producer/SKILL.md              ← Agent 6 — The Producer (content engine)
-│   ├── operator/SKILL.md              ← Agent 7 — The Operator (PM, SOPs, cadence, reporting)
-│   └── accountant/SKILL.md            ← Agent 8 — The Accountant (money, the CAC ceiling)
-├── engines/                           ← 40 deep method files. NOT skills — loaded on demand only
-│   └── README.md                      ← the index agents read; doctrine E2 governs use
-├── hooks/hooks.json                   ← SessionStart: starts setup itself on a fresh workspace
-├── scripts/orca-first-run.sh          ← that check. POSIX sh, no deps, fails open
-└── examples/
-    └── business-profile-example.md    ← filled example (fictional decking company)
-```
+Every owner has heard all of it. *Your funnel is broken. Your ads need work. You need more content.
+You need a CRM. You need to post daily.* All of it sounds true. Some of it is. Most of it, for your
+business, this month, is not — and it costs you money and a quarter of your life to find out which.
 
-**Roster complete and field-tested (10 Aug 2026)** — 9 agents, 17 runs against real businesses,
-24 defects closed. Seven of the nine were run on two opposite-shaped businesses and produced two
-different diagnoses from the same ladder. **The Hunter and the Accountant have one run each** —
-state that limitation when shipping rather than rounding it up.
+The reason the advice is useless isn't that it's wrong. It's that **nobody ranks it against your
+actual numbers.** So you fix the fifth-most-important thing beautifully, and nothing moves.
 
-## The name
+Orca ranks it. Every agent runs a six-rung ladder over your business, and **the first rung that
+fails is the constraint.** One, not a list. That is the whole product, and it's why the name is
+what it is.
 
-**Orca — One Real Constraint, Always.** Locked 10 Aug 2026.
+---
 
-The expansion is the method, not a slogan: every agent runs a six-rung ladder and **the first rung
-that fails is the constraint** — one, not a list. It never ships on the install line; it belongs in
-the deck and on the call. The name stands alone either way.
+## What you actually get
 
-## Installing it
+Ten specialists. You never have to remember what they do — you describe what's going on in plain
+English and the Advisor picks.
 
-The folder is the plugin *and* its own marketplace, so there is no build step — publishing is a
-git push. Buyers run:
-
-```
-/plugin marketplace add https://github.com/savmediagroup/orca.git
-/plugin install orca@savmedia
-/setup
-```
-
-Distribution repo: **`savmediagroup/orca`, private** — buyers are added as collaborators, which is
-also how access is revoked. Full buyer-facing instructions in [INSTALL.md](INSTALL.md).
-
-**The buyer needs no technical skill and no command list.** A `SessionStart` hook checks for
-`business-profile.md`; if it's missing, setup starts on its own. After that they describe the
-problem in plain English and the Advisor routes it. The slash commands exist for people who want
-them — nobody has to learn ten of them.
-
-```
-install → setup starts itself → Advisor diagnoses → the right specialist runs
-```
-
-The hook is POSIX `sh`, no jq and no network, and **fails open**: if it breaks on someone's
-machine the session continues normally. A broken hook must never be the first thing a buyer meets.
-
-## The engines
-
-`engines/` holds **40 deep method files** — the full ads and SEO toolchains plus the creative
-engine — behind the ten agents.
-
-**They are not skills.** They add no commands and no always-on tokens; an agent loads one only when
-its ladder calls for that depth. Verified: the component inventory is still 10 skills at ~1,309
-tokens with all 40 present. Forty commands would have been a worse product than ten agents, and
-forty always-on descriptions would have slowed every session for everyone.
-
-Indexed in [engines/README.md](engines/README.md), governed by doctrine **E2**: the agent's own file
-wins on conflict, engines are never surfaced to the user, and **bundled scripts are a bonus, never a
-requirement** — a buyer being told to install Python is a failed product.
-
-## The setup wizard
-
-`/setup` is deliberately thin. It checks the workspace and the roster, **hands the intake to the
-Advisor rather than running a second one**, and connects tools *in the order the diagnosis calls
-for* instead of asking for nine integrations up front.
-
-It ends on **the cold start test**: setup is not complete until one agent has produced one real
-finding from the buyer's own data — not a summary of their profile, not a list of capabilities.
-If nothing real can be produced yet, it says so and names the single connection that would
-unblock it. **A smooth onboarding that produces nothing is the failure mode of every AI product**,
-and this is the check against it.
-
-## Each agent's honesty mechanic
-
-Every specialist carries one named, mandatory calculation that stops it producing a confident
-answer the evidence doesn't support. These are the hardest part of the product to copy and the
-main reason the advice is trustworthy.
-
-| Agent | Mechanic | What it prevents |
+| | Agent | What it owns |
 |---|---|---|
-| Advisor | Stress-test best/expected/worst + the fastest cheapest test | Prescribing on instinct |
-| Auditor | **The noise floor test** — breakeven effect ÷ their own variance | Judging ads by sales data that can't see them |
-| Ranker | **The citation test** (3 tiers) + the timeline honesty rule | Promised rankings and dates; GEO by opinion |
-| Scripter | **The claim ledger** + the variation matrix | Slop, regulated-sector damage, tests that prove nothing |
-| Hunter | **The reply math** — worked backwards from the revenue target | Outbound plans the business can't send or answer |
-| Builder | **The three-lead test** + the leak cost | "It's built" when nothing fires; unpriced hygiene projects |
-| Producer | **The batch economics** + the reservoir rule | Calendars that die in month three |
-| Operator | **The capacity check** — every plan costed in hours/week | Process added to teams with no spare hours |
-| Accountant | **The ceiling** (max profitable CAC + payback) + the minimum scoreboard | The whole team guessing |
-| Setup | **The cold start test** — one real finding from their own data before setup can close | An onboarding that feels smooth and delivers nothing |
+| **The front door** | **Advisor** | Diagnoses the business, finds the constraint, routes the fix. Start here, always |
+| | **Auditor** | Paid advertising — tracking, waste, structure, and whether your spend can be judged at all |
+| | **Ranker** | Search — Google, Maps, and whether AI assistants cite you when someone asks for what you sell |
+| | **Scripter** | Offers, hooks and copy — with every claim traced back to evidence or cut |
+| | **Hunter** | Outbound — fit, lists, deliverability, sequences, and the reply maths behind them |
+| | **Builder** | CRM, funnels and automations — including whether what you built actually fires |
+| | **Producer** | The content engine — capacity, angles, capture, distribution, measurement |
+| | **Operator** | Process, ownership, reporting, and how much of the business still runs through you |
+| | **Accountant** | The money — unit margin, cash, and the most you can profitably pay for a customer |
+| | **Setup** | Gets you running, in the right order, and refuses to finish until it's proved itself |
 
-Every agent also shares one anatomy: doctrine → profile (with fallback) → access check → intake
-gaps → a six-rung ladder where the first failure is the binding constraint → the honesty mechanic →
-exactly three sequenced steps → named deliverables → routing → guardrails.
+---
 
-## The doctrine layer
+## Why you can trust what it tells you
 
-`_SHARED/TEAM-DOCTRINE.md` holds the twelve rules every agent obeys — provenance marking,
-hypothesis discipline, the cross-channel rule, minimum evidence before scoring, deliverable shape,
-approval and safety, the shared honesty rules, the handoff brief, the flywheel exception.
+This is the part that makes Orca different from every AI tool you've been sold, and it's worth
+sixty seconds.
 
-Each agent loads it as **STEP −1**, before its own file. Their skill files hold ladders, questions
-and judgement; the doctrine holds the discipline that makes any of it trustworthy.
+**Every agent carries one named calculation it is not allowed to skip** — a check that stops it
+handing you a confident answer the evidence doesn't support. Confidence is the cheapest thing an
+AI produces. These are the brakes.
 
-**Why it exists:** the same defects kept appearing in nine separate files. Field tests now produce
-one edit instead of nine, and a fix can't reach eight agents and miss the ninth. When a field test
-finds something that applies to more than one agent, **it belongs here, not in the skill.**
+| Agent | The check it must run | What it stops |
+|---|---|---|
+| **Auditor** | **The noise floor test** — is the effect you're looking for even bigger than your week-to-week randomness? | Judging your ads with sales data that mathematically cannot see them |
+| **Accountant** | **The ceiling** — the most you can profitably pay for a customer, and how long until you get it back | Everyone in the business guessing what a lead is worth |
+| **Ranker** | **The citation test** and the timeline honesty rule | Promised rankings, invented dates, AI-search advice by vibes |
+| **Scripter** | **The claim ledger** — every claim sourced or struck | Slop, and regulated-industry claims that get you in trouble |
+| **Hunter** | **The reply maths**, worked backwards from your revenue target | Outbound plans you don't have the hours to send or answer |
+| **Builder** | **The three-lead test** | "It's built" when nothing actually fires |
+| **Producer** | **Batch economics** and the reservoir rule | Content calendars that quietly die in month three |
+| **Operator** | **The capacity check** — every plan costed in hours per week | Process piled onto a team with no spare hours |
+| **Setup** | **The cold start test** | An onboarding that feels great and produces nothing |
 
-## Dev copies
+> **The demo that convinced us it works:** on its first run against a real prospect, the Advisor read
+> the proposal its own makers had written for that business — and said in writing that the pitch
+> didn't connect to the constraint it had diagnosed. Then it offered two ways to fix the proposal.
+>
+> **An advisor that won't contradict the person paying for it is a sales tool.** This one will.
 
-Product source is canonical. The dev copies under `.claude/skills/<name>/` let Ahmed invoke the
-agents inside this vault.
+---
 
-**All nine are thin pointer stubs** that read the doctrine and then the product source. Drift is
-structurally impossible — verified zero drift before the last four full duplicates were converted
-on 10 Aug 2026.
+## How it feels to use
 
-**Naming collision:** the product Scripter's dev copy is `scripter-product`, because Sav already
-has an unrelated internal `/scripter` skill. Do not overwrite it.
+```
+install  →  it starts itself  →  you talk normally  →  the right specialist runs
+```
 
-## The bug that shaped the product
+There is no command list to learn. Install it, restart, and **setup begins on its own** — because a
+product that waits for you to know a magic word has already failed.
 
-**Never write a dollar sign immediately followed by a digit in a skill file.** Argument
-substitution eats it silently. It corrupted the Auditor's waste-ledger example, and — undetected
-for longer — the Advisor's auction analogy and concrete-numbers voice rule, which is the front
-door's most memorable line. Grep every skill for `\$[0-9]` before shipping.
+From there you type things like *"leads dried up in July"* or *"I'm spending four grand a month on
+ads and I can't tell if it works"*, and the Advisor takes it from there.
 
-## Agent anatomy (every specialist follows this)
+**It refuses to finish setup until it has shown you something real.** Not a summary of what you just
+told it — an actual finding about your business, from your own data. If it can't get there yet, it
+says *paused, not complete*, and names the one connection that would unblock it.
 
-**Load profile → Intake gaps → Diagnose → Recommend → (offer to) Execute → Deliver → Log to profile**
+---
 
-Two modes:
-- **Advise mode** — no tools needed; strategy + recommendations only. Always works.
-- **Execute mode** — uses connected MCPs (CRM, ad platforms, accounting) when available.
-  Degrade gracefully: if a tool isn't connected, deliver the advice + exact manual steps.
+## What it isn't
 
-## Dev testing in this vault
+We'd rather you know now than find out in week two.
 
-A dev copy of each skill is installed at `.claude/skills/<name>/` so Ahmed can invoke it here.
-The product source in THIS folder is canonical — edit here, then sync the dev copy.
-Test rule (from the build routine): every agent gets run against a real client scenario
-before it counts as shipped — but no client data ever flows back into `product/`.
+- **It is not a chatbot that agrees with you.** Several agents will tell you your best-performing
+  channel can't be measured, or that the thing you're proud of isn't the problem.
+- **It does not replace your accountant, lawyer or doctor.** It produces analysis, not professional
+  advice in any regulated field.
+- **It cannot work miracles on missing data.** If nothing is tracked, the honest first answer is
+  "here's what to instrument, and why every other answer is a guess until you do."
+- **It runs on your own Claude subscription** (Pro or Max). There's no usage bill from us, and no
+  free-plan version — the reasoning is the product.
+- **Your data stays yours.** Your profile and every report are files in your own folder, on your own
+  machine. We don't hold them and the agents don't send them anywhere.
+
+---
+
+## Getting started
+
+Ten minutes, and you don't need to be technical.
+
+**→ [INSTALL.md](INSTALL.md)**
+
+If you get stuck at any step, stop there and send us the step number. We'd rather fix it than have
+you push through it — and the setup call exists for exactly that reason.
+
+---
+
+## Under the hood, briefly
+
+**Depth on demand.** Behind the ten agents sit **forty deep method files** — the full paid-media and
+search toolchains. They are not commands and they cost you nothing until they're needed; an agent
+loads one only when its ladder calls for that depth. Forty commands would have been a worse product
+than ten agents.
+
+**A shared spine.** Every agent obeys the same doctrine before it obeys its own instructions: mark
+where every number came from, name a mechanism as a hypothesis rather than a fact, lead with what
+is costing money *now*, state the limits of the data, and say the hard thing early. Fixes land in
+one place instead of ten.
+
+**Two modes, always.** Connected to your accounts, agents read the real numbers. Not connected, they
+still do real work from what you know — and tell you exactly which connection would sharpen it.
+
+---
+
+## Licence and updates
+
+Orca is licensed for use in your own business — see [LICENSE](LICENSE). Parts of the method library
+derive from open-source work and keep their own licences, recorded in [NOTICE](NOTICE.md).
+
+The agents improve as they're field-tested against real businesses. `/plugin update orca` is how you
+get that. What changed and why is in [CHANGELOG.md](CHANGELOG.md).
+
+---
+
+<div align="center">
+
+**Orca** · One Real Constraint, Always.
+
+Built by [Sav Media Group](https://savmediagroup.com.au)
+
+</div>

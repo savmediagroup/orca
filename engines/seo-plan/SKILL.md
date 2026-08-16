@@ -5,7 +5,7 @@ description: >
   templates, competitive analysis, content strategy, and implementation
   roadmap. Use when user says "SEO plan", "SEO strategy", "content strategy",
   "site architecture", or "SEO roadmap".
-user-invokable: true
+user-invokable: false
 argument-hint: "[business-type]"
 allowed-tools:
   - Read

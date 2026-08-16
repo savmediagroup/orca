@@ -5,14 +5,14 @@
     "url": "https://savmediagroup.com.au"
   },
   "description": "Orca — One Real Constraint, Always. An Advisor and nine specialist agents for owner-operators.",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "plugins": [
     {
       "name": "orca",
       "source": "./",
       "displayName": "Orca",
       "description": "One Real Constraint, Always. An Advisor and nine specialists — paid media, SEO/GEO, copy, outbound, CRM, content, operations and money. Start with /setup.",
-      "version": "0.9.4",
+      "version": "0.9.5",
       "author": {
         "name": "Sav Media Group",
         "url": "https://savmediagroup.com.au"

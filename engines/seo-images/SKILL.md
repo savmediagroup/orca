@@ -5,7 +5,7 @@ description: >
   sizes, formats, responsive images, lazy loading, and CLS prevention. Use when
   user says "image optimization", "alt text", "image SEO", "image size",
   or "image audit".
-user-invokable: true
+user-invokable: false
 argument-hint: "[url]"
 allowed-tools:
   - Read

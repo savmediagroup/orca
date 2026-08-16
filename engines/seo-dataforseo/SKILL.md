@@ -9,7 +9,7 @@ description: >
   installed. Use when user says "dataforseo", "live SERP", "keyword volume",
   "backlink data", "competitor data", "AI visibility check", "LLM mentions",
   or "real search data".
-user-invokable: true
+user-invokable: false
 argument-hint: "[command] [query]"
 allowed-tools:
   - Read

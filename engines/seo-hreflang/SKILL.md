@@ -5,7 +5,7 @@ description: >
   common mistakes, validates language/region codes, and generates correct
   hreflang implementations. Use when user says "hreflang", "i18n SEO",
   "international SEO", "multi-language", "multi-region", or "language tags".
-user-invokable: true
+user-invokable: false
 argument-hint: "[url]"
 allowed-tools:
   - Read

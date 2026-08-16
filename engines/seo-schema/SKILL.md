@@ -4,7 +4,7 @@ description: >
   Detect, validate, and generate Schema.org structured data. JSON-LD format
   preferred. Use when user says "schema", "structured data", "rich results",
   "JSON-LD", or "markup".
-user-invokable: true
+user-invokable: false
 argument-hint: "[url]"
 allowed-tools:
   - Read
